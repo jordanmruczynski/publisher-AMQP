@@ -1,20 +1,25 @@
-package pl.jordanmruczynski.publisher;
+package pl.jordanmruczynski.publisher.controller;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.jordanmruczynski.publisher.model.Notification;
+import pl.jordanmruczynski.publisher.model.Student;
+import pl.jordanmruczynski.publisher.service.NotificationService;
 
 @RestController
 public class MessageController {
 
-    private final RabbitTemplate rabbitTemplate;
+    private final NotificationService notificationService;
 
-    public MessageController(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
+    public MessageController(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
-    @PostMapping("/notification")
-    public String sendNotification(@RequestBody Notification notification) {
-        rabbitTemplate.convertAndSend("testqueue", notification);
-        return "Wysłano powiadomienie";
+    @GetMapping("/notification")
+    public String sendStudentNotification(@RequestParam Long studentId) {
+        notificationService.sendStudentNotification(studentId);
+        return "Wysłano powiadomienie!";
     }
 }

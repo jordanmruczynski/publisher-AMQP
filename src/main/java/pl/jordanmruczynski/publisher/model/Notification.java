@@ -1,4 +1,4 @@
-package pl.jordanmruczynski.publisher;
+package pl.jordanmruczynski.publisher.model;
 
 import java.io.Serializable;
 
@@ -7,6 +7,15 @@ public class Notification implements Serializable {
     private String email;
     private String title;
     private String body;
+
+    public Notification() {
+    }
+
+    public Notification(String email, String title, String body) {
+        this.email = email;
+        this.title = title;
+        this.body = body;
+    }
 
     public String getEmail() {
         return email;
